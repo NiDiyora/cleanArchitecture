@@ -20,7 +20,7 @@ object HiltModule {
 
     @Provides
     @Singleton
-    fun ProvideMealSearchAPI(): MealSearchAPI {
+    fun provideMealSearchAPI(): MealSearchAPI {
         return Retrofit.Builder().baseUrl(Constant.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).build()
             .create(MealSearchAPI::class.java)

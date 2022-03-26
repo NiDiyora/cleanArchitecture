@@ -64,13 +64,13 @@ fun MealDTO.toDomainMeal(): Meal {
     return Meal(
         mealId = this.idMeal,
         name = this.strMeal ?: "",
-        image = this.strImageSource ?: ""
+        image = this.strMealThumb ?: ""
     )
 }
 
 fun MealDTO.toDomainMealDetails(): MealDetails {
     return MealDetails(
-        name = this.strMeal ?: "",
+            name = this.strMeal ?: "",
         image = this.strMealThumb ?: "",
         instructions = this.strInstructions ?: "",
         category = this.strCategory ?: "",

@@ -1,6 +1,8 @@
 package com.example.cleanarchitecture.presentation.meal_search
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +11,10 @@ import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import com.example.cleanarchitecture.R
 import com.example.cleanarchitecture.databinding.FragmentMealSearchBinding
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -59,6 +63,15 @@ class MealSearchFragment : Fragment() {
             adapter = mealSearchAdapter
         }
 
+        mealSearchAdapter.itemClickListener {
+            findNavController().navigate(
+                MealSearchFragmentDirections.actionMealSearchFragmentToMealDetailsFragment2(
+                    it.mealId
+                )
+            )
+
+        }
+
         lifecycle.coroutineScope.launchWhenCreated {
             mealSearchViewModel.mealSearchList.collect { it ->
                 if (it.isLoading) {
@@ -71,6 +84,7 @@ class MealSearchFragment : Fragment() {
                 it.data?.let {
                     binding?.progressMealSearch?.visibility = View.GONE
                     mealSearchAdapter.setContentList(it.toMutableList())
+                    Log.d(TAG, "onViewCreated: $it")
                 }
             }
         }
